@@ -181,8 +181,9 @@ echo "[openclaw-bot] Config written"
 
 # ── Configure lark-cli ──
 echo "[openclaw-bot] Configuring lark-cli..."
-mkdir -p /root/.lark-cli /root/.lark-claw
+mkdir -p /root/.lark-cli /root/.lark-claw /root/.hermes
 
+# Write lark-cli context.json
 cat > /root/.lark-cli/context.json << LARKEOF
 {
   "appId": "${FEISHU_APP_ID}",
@@ -191,10 +192,28 @@ cat > /root/.lark-cli/context.json << LARKEOF
 LARKEOF
 cp /root/.lark-cli/context.json /root/.lark-claw/context.json 2>/dev/null || true
 
+# Write .env for lark-cli
 cat > /root/.lark-cli/.env << ENVEOF
 FEISHU_APP_ID=${FEISHU_APP_ID}
 FEISHU_APP_SECRET=${FEISHU_APP_SECRET}
 ENVEOF
+
+# Create Hermes context (required for lark-cli bind)
+cat > /root/.hermes/.env << HENVEOF
+FEISHU_APP_ID=${FEISHU_APP_ID}
+FEISHU_APP_SECRET=${FEISHU_APP_SECRET}
+HENVEOF
+cat > /root/.hermes/config.yaml << HYAMLEOF
+model:
+  provider: custom
+  default: dummy
+  base_url: https://localhost
+  api_key: dummy
+HYAMLEOF
+
+# Bind lark-cli with bot-only identity
+echo "[openclaw-bot] Binding lark-cli..."
+lark-cli config bind --source hermes --app-id "${FEISHU_APP_ID}" --identity bot-only 2>&1 || echo "[openclaw-bot] lark-cli bind skipped (will use context.json fallback)"
 
 export FEISHU_APP_ID FEISHU_APP_SECRET
 echo "[openclaw-bot] lark-cli configured (appId=${FEISHU_APP_ID})"
