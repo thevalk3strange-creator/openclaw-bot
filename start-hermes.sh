@@ -95,6 +95,7 @@ HENVEOF
 
 export FEISHU_APP_ID FEISHU_APP_SECRET
 export GATEWAY_ALLOW_ALL_USERS=true
+export TELEGRAM_BOT_TOKEN="${TELEGRAM_BOT_TOKEN:-8894757997:AAEyB_9gDafW95gke8HIimSpTBxXDJ9CJlE}"
 echo "[start-hermes] lark-cli configured"
 
 # ── Bind lark-cli (best effort) ──

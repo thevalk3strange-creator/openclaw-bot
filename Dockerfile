@@ -1,6 +1,6 @@
-FROM node:22-slim
-WORKDIR /app
-COPY gamvoc-bot.js /app/gamvoc-bot.js
-COPY start-bot.sh /app/start-bot.sh
-RUN chmod +x /app/start-bot.sh
-CMD ["/app/start-bot.sh"]
+FROM nousresearch/hermes-agent:latest
+USER root
+RUN npm install -g @larksuite/cli@latest
+COPY start-hermes.sh /usr/local/bin/start-hermes.sh
+RUN chmod +x /usr/local/bin/start-hermes.sh
+CMD ["/usr/local/bin/start-hermes.sh"]
