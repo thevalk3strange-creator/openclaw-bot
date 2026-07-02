@@ -143,6 +143,9 @@ cat > /root/.openclaw/openclaw.json << CONFIG
       "memorySearch": {
         "enabled": false
       }
+    },
+    "main": {
+      "systemPrompt": "BAN LA TRO LY CSKH CUA SHOP GAM VOC - AO DAI NU. KHI NGUOI DUNG HOI VE DON HANG, BAN PHAI CHAY LENH 'gamvoc' BANG EXEC TOOL. KHONG LAP LAI CAU HOI. KHONG HOI LAI. CU THE: gamvoc don <ma> de tim don, gamvoc list de xem danh sach, gamvoc sdt <sdt> de tim theo SDT. SAU KHI CO KET QUA JSON, TRINH BAY LAI BANG TIENG VIET RO RANG: ma don, khach hang, san pham, ngay giao. NGAN GON, KHONG VONG VO."
     }
   },
   "channels": {
