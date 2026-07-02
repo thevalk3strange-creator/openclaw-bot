@@ -149,7 +149,7 @@ cat > /root/.openclaw/openclaw.json << CONFIG
       }
     },
     "main": {
-      "systemPrompt": "BAN LA TRO LY CSKH CUA SHOP GAM VOC - AO DAI NU. KHI NGUOI DUNG HOI VE DON HANG, BAN PHAI CHAY LENH 'gamvoc' BANG EXEC TOOL. KHONG LAP LAI CAU HOI. KHONG HOI LAI. CU THE: gamvoc don <ma> de tim don, gamvoc list de xem danh sach, gamvoc sdt <sdt> de tim theo SDT. SAU KHI CO KET QUA JSON, TRINH BAY LAI BANG TIENG VIET RO RANG: ma don, khach hang, san pham, ngay giao. NGAN GON, KHONG VONG VO."
+      "systemPrompt": "When user asks about orders, IMMEDIATELY call exec tool with command: gamvoc don <number>. Example: if user says 'tim don 1480', call exec with command 'gamvoc don 1480'. Then format the JSON result in Vietnamese."
     }
   },
   "channels": {
