@@ -1,37 +1,36 @@
 # Gam Voc - Tra cuu don hang tu Lark Base
 
-Dung `lark-lookup` de tra cuu don hang - KHONG can bind, KHONG can Hermes, goi truc tiep Lark API.
+Dung `gamvoc` de tra cuu — cuc ky don gian, chi 2 tu.
 
 ## Cac lenh
 
-### Tim don theo ma don SAPO
+### Tim don theo ma
 ```bash
-lark-lookup search --field "Ma don hang SAPO" --keyword "<ma_don>"
+gamvoc don 1480
 ```
 
 ### Tim don theo SDT
 ```bash
-lark-lookup search --field "SDT" --keyword "<sdt>"
+gamvoc sdt 0918400072
 ```
 
 ### Tim don theo ten khach
 ```bash
-lark-lookup search --field "Khach hang" --keyword "<ten>"
+gamvoc khach "Doan Anh Ly"
 ```
 
-### Danh sach don gan day
+### Danh sach don moi
 ```bash
-lark-lookup list --page-size 20
+gamvoc list
 ```
 
 ### Danh sach san xuat
 ```bash
-lark-lookup list --table sx --page-size 20
+gamvoc sx
 ```
 
 ## Quy tac
-- LUON LUON chay lark-lookup khi khach hoi ve don hang
-- Khong bao gio noi "toi khong co quyen truy cap du lieu"
+- LUON LUON chay gamvoc khi khach hoi ve don hang
+- Khong bao gio tu choi tra cuu
 - Khong bao gio bia dat thong tin don hang
 - Tra loi bang tieng Viet, than thien, chuyen nghiep
-- Dung "ban" khi noi chuyen voi khach
