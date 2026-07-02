@@ -222,8 +222,8 @@ echo "[openclaw-bot] lark-cli configured (appId=${FEISHU_APP_ID})"
 echo "[openclaw-bot] Running doctor fix..."
 openclaw doctor --fix 2>/dev/null || true
 
-# ── Allow all exec commands (YOLO mode for lark-cli) ──
-echo "[openclaw-bot] Setting exec policy..."
+# ── Force exec policy AFTER doctor (doctor might reset it) ──
+echo "[openclaw-bot] Setting exec policy (YOLO)..."
 mkdir -p /root/.openclaw
 cat > /root/.openclaw/exec-approvals.json << 'EXECEOF'
 {
@@ -235,7 +235,8 @@ cat > /root/.openclaw/exec-approvals.json << 'EXECEOF'
   "agents": {}
 }
 EXECEOF
-echo "[openclaw-bot] Exec policy: YOLO (dual-layer)"
+openclaw exec-policy preset yolo 2>/dev/null || true
+echo "[openclaw-bot] Exec policy: YOLO (written AFTER doctor)"
 
 # ── Start gateway ──
 echo "[openclaw-bot] Starting gateway..."
