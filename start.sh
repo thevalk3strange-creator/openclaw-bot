@@ -171,14 +171,28 @@ echo "[openclaw-bot] Config written"
 echo "[openclaw-bot] Running doctor fix..."
 openclaw doctor --fix 2>/dev/null || true
 
-# -- Write .env for lark-cli --
+# -- Configure lark-cli --
 if [ -n "$FEISHU_APP_ID" ] && [ -n "$FEISHU_APP_SECRET" ]; then
-  mkdir -p /root/.lark-cli
+  # Write lark-cli config file (no bind needed)
+  mkdir -p /root/.lark-cli /root/.lark-claw
+  cat > /root/.lark-cli/context.json << LARKEOF
+{
+  "appId": "${FEISHU_APP_ID}",
+  "appSecret": "${FEISHU_APP_SECRET}"
+}
+LARKEOF
+  cp /root/.lark-cli/context.json /root/.lark-claw/context.json 2>/dev/null || true
+
+  # Also write .env as fallback
   cat > /root/.lark-cli/.env << ENVEOF
 FEISHU_APP_ID=${FEISHU_APP_ID}
 FEISHU_APP_SECRET=${FEISHU_APP_SECRET}
 ENVEOF
-  echo "[openclaw-bot] lark-cli .env written"
+
+  # Export env vars for current process
+  export FEISHU_APP_ID FEISHU_APP_SECRET
+
+  echo "[openclaw-bot] lark-cli configured"
 else
   echo "[openclaw-bot] WARNING: FEISHU_APP_ID/FEISHU_APP_SECRET not set - lark-cli will not work"
 fi
