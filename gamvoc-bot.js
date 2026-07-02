@@ -221,6 +221,9 @@ async function processMessage(msg) {
 }
 
 async function main() {
+  // Simple HTTP server for Railway health check
+  require('http').createServer((req, res) => { res.writeHead(200); res.end('OK'); }).listen(process.env.PORT || 8080);
+  console.log('[gamvoc-bot] Health check listening on port ' + (process.env.PORT || 8080));
   console.log('[gamvoc-bot] Starting Gam Voc CSKH bot (hybrid mode)...');
   while (true) {
     try {
