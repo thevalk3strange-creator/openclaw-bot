@@ -1,7 +1,10 @@
 ---
 name: gamvoc
-description: Tra cứu đơn hàng Gấm Vóc từ Lark Base - tìm theo mã đơn, SĐT, tên khách, xem danh sách
+description: Tra cứu đơn hàng Gấm Vóc - tìm theo mã, SĐT, tên khách, xem danh sách
 user-invocable: true
+command-dispatch: tool
+command-tool: exec
+command-arg-mode: raw
 metadata:
   openclaw:
     requires:
@@ -9,25 +12,26 @@ metadata:
         - gamvoc
 ---
 
-# Gấm Vóc - Tra cứu đơn hàng
+# Gấm Vóc - Tra cứu đơn hàng từ Lark Base
 
-Dùng lệnh `gamvoc` để tra cứu đơn hàng từ Lark Base.
+Dùng lệnh `gamvoc` để tra cứu. Khi người dùng muốn tra cứu, LUÔN LUÔN chạy exec tool với lệnh tương ứng.
 
-## Lệnh
+## Các lệnh
 
 ### Tìm đơn theo mã
 ```bash
-gamvoc don 1480
+gamvoc don <mã đơn>
 ```
+VD: `gamvoc don 1480`
 
 ### Tìm đơn theo SĐT
 ```bash
-gamvoc sdt 0918400072
+gamvoc sdt <SĐT>
 ```
 
 ### Tìm đơn theo tên khách
 ```bash
-gamvoc khach "Đoàn Anh Ly"
+gamvoc khach <tên khách>
 ```
 
 ### Danh sách đơn mới nhất
@@ -40,8 +44,7 @@ gamvoc list
 gamvoc sx
 ```
 
-## Quy tắc cho Agent
-- LUÔN LUÔN dùng exec tool chạy `gamvoc` khi người dùng hỏi về đơn hàng
-- Đọc kết quả JSON và trả lời bằng tiếng Việt
-- KHÔNG lặp lại câu hỏi, KHÔNG bịa thông tin
-- Trình bày: Mã đơn, Khách hàng, SĐT, Sản phẩm, Ngày giao
+## QUAN TRỌNG
+Mỗi khi người dùng hỏi về đơn hàng, BẠN PHẢI dùng exec tool để chạy lệnh gamvoc tương ứng.
+KHÔNG BAO GIỜ lặp lại câu hỏi. KHÔNG BAO GIỜ bỏ qua.
+SAU KHI có kết quả JSON, trình bày bằng tiếng Việt: Mã đơn, Khách hàng, SĐT, Sản phẩm, Ngày giao.
