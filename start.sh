@@ -91,12 +91,6 @@ FEISHU_APP_ID=${FEISHU_APP_ID}
 FEISHU_APP_SECRET=${FEISHU_APP_SECRET}
 ENVEOF
   echo "[openclaw-bot] lark-cli .env written"
-
-  # Bind lark-cli
-  if command -v lark-cli >/dev/null 2>&1; then
-    echo "[openclaw-bot] Binding lark-cli..."
-    lark-cli config bind --source hermes --app-id "$FEISHU_APP_ID" --identity bot-only 2>&1 || echo "[openclaw-bot] Bind skipped"
-  fi
 else
   echo "[openclaw-bot] WARNING: FEISHU_APP_ID/FEISHU_APP_SECRET not set - lark-cli will not work"
 fi
