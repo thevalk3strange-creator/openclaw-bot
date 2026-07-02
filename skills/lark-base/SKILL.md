@@ -1,36 +1,47 @@
-# Gam Voc - Tra cuu don hang tu Lark Base
+---
+name: gamvoc
+description: Tra cứu đơn hàng Gấm Vóc từ Lark Base - tìm theo mã đơn, SĐT, tên khách, xem danh sách
+user-invocable: true
+metadata:
+  openclaw:
+    requires:
+      bins:
+        - gamvoc
+---
 
-Dung `gamvoc` de tra cuu — cuc ky don gian, chi 2 tu.
+# Gấm Vóc - Tra cứu đơn hàng
 
-## Cac lenh
+Dùng lệnh `gamvoc` để tra cứu đơn hàng từ Lark Base.
 
-### Tim don theo ma
+## Lệnh
+
+### Tìm đơn theo mã
 ```bash
 gamvoc don 1480
 ```
 
-### Tim don theo SDT
+### Tìm đơn theo SĐT
 ```bash
 gamvoc sdt 0918400072
 ```
 
-### Tim don theo ten khach
+### Tìm đơn theo tên khách
 ```bash
-gamvoc khach "Doan Anh Ly"
+gamvoc khach "Đoàn Anh Ly"
 ```
 
-### Danh sach don moi
+### Danh sách đơn mới nhất
 ```bash
 gamvoc list
 ```
 
-### Danh sach san xuat
+### Danh sách sản xuất
 ```bash
 gamvoc sx
 ```
 
-## Quy tac
-- LUON LUON chay gamvoc khi khach hoi ve don hang
-- Khong bao gio tu choi tra cuu
-- Khong bao gio bia dat thong tin don hang
-- Tra loi bang tieng Viet, than thien, chuyen nghiep
+## Quy tắc cho Agent
+- LUÔN LUÔN dùng exec tool chạy `gamvoc` khi người dùng hỏi về đơn hàng
+- Đọc kết quả JSON và trả lời bằng tiếng Việt
+- KHÔNG lặp lại câu hỏi, KHÔNG bịa thông tin
+- Trình bày: Mã đơn, Khách hàng, SĐT, Sản phẩm, Ngày giao

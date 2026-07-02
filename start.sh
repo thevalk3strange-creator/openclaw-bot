@@ -103,10 +103,13 @@ cat > /root/.openclaw/workspace/IDENTITY.md << 'IDEOF'
 - Style: Than thien, nhanh gon, chinh xac
 IDEOF
 
-# ── Copy lark-base skill to workspace ──
+# ── Copy lark-base skill to ALL workspace locations ──
 if [ -f /data/workspace/skills/lark-base/SKILL.md ]; then
+  mkdir -p /root/.openclaw/workspace/skills/lark-base
+  mkdir -p /root/.openclaw/skills/lark-base
   cp /data/workspace/skills/lark-base/SKILL.md /root/.openclaw/workspace/skills/lark-base/SKILL.md
-  echo "[openclaw-bot] lark-base skill copied"
+  cp /data/workspace/skills/lark-base/SKILL.md /root/.openclaw/skills/lark-base/SKILL.md
+  echo "[openclaw-bot] lark-base skill copied to all locations"
 fi
 
 echo "[openclaw-bot] Workspace files written"
