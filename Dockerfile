@@ -2,10 +2,10 @@ FROM node:20-slim
 
 WORKDIR /app
 
-# Install OpenClaw globally
-RUN npm install -g openclaw@latest
+# Install curl + OpenClaw
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/* && npm install -g openclaw@latest
 
-# Install lark-cli globally
+# Install lark-cli
 RUN npm install -g @larksuite/cli@latest
 
 # Create data directory
