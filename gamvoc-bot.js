@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Gam Voc CSKH Bot - Hybrid: Pattern matching + AI Box LLM for natural language
-const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8673157236:AAEYeFjsglFvGQLyk6Ybs1lm9yQSNjkV1KQ';
+const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN || '8894757997:AAEyB_9gDafW95gke8HIimSpTBxXDJ9CJlE';
 const FEISHU_APP_ID = process.env.FEISHU_APP_ID || 'cli_a95799f30ef8de18';
 const FEISHU_APP_SECRET = process.env.FEISHU_APP_SECRET || 'wi5j1S8jieUdKNcjl78SIbDnBGjTKIeM';
 const AI_BOX_KEY = process.env.AI_BOX_KEY || 'sk-V34DDrtMOcHX8ZiRuhS2Hq8BmgWzKVZp4VtwlWCHJC4caJPS';
