@@ -91,6 +91,29 @@ lark-cli base +record-list --base-token ZSZxbtXCXagSiZsZlO4jVb46pPg --table-id t
 SOLEOF
 echo "[openclaw-bot] SOUL.md written"
 
+# ── Write USER.md (skip onboarding) ──
+cat > /root/.openclaw/workspace/USER.md << 'USEREOF'
+# User Profile
+
+- Name: Nguyen Khanh Hoang
+- Role: Chu shop Gam Voc
+- Language: Tieng Viet
+- Timezone: Asia/Ho_Chi_Minh
+- Preferences: Tra loi ngan gon, nhanh, chinh xac. Khong hoi lai nhieu.
+USEREOF
+echo "[openclaw-bot] USER.md written"
+
+# ── Write IDENTITY.md ──
+cat > /root/.openclaw/workspace/IDENTITY.md << 'IDEOF'
+# Identity
+
+- Name: Tro ly Gam Voc
+- Role: Tro ly CSKH cho shop thoi trang ao dai nu Gam Voc
+- Language: Tieng Viet
+- Style: Than thien, nhiet tinh, chuyen nghiep, tra loi ngan gon
+IDEOF
+echo "[openclaw-bot] IDENTITY.md written"
+
 # Write OpenClaw config to the default path (~/.openclaw/openclaw.json)
 echo "[openclaw-bot] Writing config..."
 cat > /root/.openclaw/openclaw.json << CONFIG
@@ -133,6 +156,9 @@ cat > /root/.openclaw/openclaw.json << CONFIG
         }
       }
     }
+  },
+  "session": {
+    "dmScope": "per-channel-peer"
   }
 }
 CONFIG
