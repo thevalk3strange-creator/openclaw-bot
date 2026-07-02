@@ -229,7 +229,7 @@ async function main() {
       if (!data.ok) { await new Promise(r => setTimeout(r, 2000)); continue; }
       for (const update of data.result) {
         lastUpdateId = update.update_id;
-        if (update.message?.text) await processMessage(update.message);
+        if (update.message?.text && !update.message.from?.is_bot) await processMessage(update.message);
       }
     } catch (e) {
       console.error('[gamvoc-bot] Poll error:', e.message);
