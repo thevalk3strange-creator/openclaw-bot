@@ -157,7 +157,7 @@ function matchPattern(text) {
   }
 
   // List orders
-  if (lower.match(/danh\s*s[aá]ch|đơn\s*hàng|đơn\s*mới|list|ds\s*đơn|gần\s*đây|tu[aà]n\s*này/)) {
+  if (lower.match(/danh\s*s[aá]ch|đơn\s*hàng|đơn\s*mới|list|ds\s*đơn|gần\s*đây|tu[aà]n\s*này|th[aá]ng\s*này|h[ôo]m\s*qua|bao\s*nhi[êe]u|doanh\s*thu|c[óo]\s*m[aấ]y|thanh\s*to[aá]n/)) {
     return { matched: true, action: 'list' };
   }
 
