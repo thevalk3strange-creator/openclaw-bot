@@ -205,7 +205,16 @@ openclaw doctor --fix 2>/dev/null || true
 
 # ── Allow all exec commands (YOLO mode for lark-cli) ──
 echo "[openclaw-bot] Setting exec policy..."
+mkdir -p /root/.openclaw
+cat > /root/.openclaw/exec-approvals.json << 'EXECEOF'
+{
+  "security": "full",
+  "ask": "off",
+  "askFallback": "full"
+}
+EXECEOF
 openclaw exec-policy preset yolo 2>/dev/null || true
+echo "[openclaw-bot] Exec policy: YOLO"
 
 # ── Start gateway ──
 echo "[openclaw-bot] Starting gateway..."
