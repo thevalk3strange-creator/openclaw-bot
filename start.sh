@@ -208,13 +208,15 @@ echo "[openclaw-bot] Setting exec policy..."
 mkdir -p /root/.openclaw
 cat > /root/.openclaw/exec-approvals.json << 'EXECEOF'
 {
-  "security": "full",
-  "ask": "off",
-  "askFallback": "full"
+  "version": 1,
+  "defaults": {
+    "security": "full",
+    "ask": "off"
+  },
+  "agents": {}
 }
 EXECEOF
-openclaw exec-policy preset yolo 2>/dev/null || true
-echo "[openclaw-bot] Exec policy: YOLO"
+echo "[openclaw-bot] Exec policy: YOLO (dual-layer)"
 
 # ── Start gateway ──
 echo "[openclaw-bot] Starting gateway..."
