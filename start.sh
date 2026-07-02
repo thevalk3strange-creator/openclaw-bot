@@ -18,8 +18,8 @@ fi
 
 # Defaults for optional vars
 AI_BOX_URL="${AI_BOX_URL:-https://api.ai-box.vn/v1}"
-# Force deepseek-v4-pro (flash does NOT support tool calling)
-AI_BOX_MODEL="deepseek-v4-pro"
+# Force kimi-k2.5 (supports tool calling, verified via curl)
+AI_BOX_MODEL="kimi-k2.5"
 FEISHU_APP_ID="${FEISHU_APP_ID:-cli_a95799f30ef8de18}"
 FEISHU_APP_SECRET="${FEISHU_APP_SECRET:-wi5j1S8jieUdKNcjl78SIbDnBGjTKIeM}"
 
