@@ -84,9 +84,18 @@ Hay xac dinh y dinh va CHI tra ve JSON (khong text khac):
 
 async function handleLLMResponse(chatId, llmOutput, originalText) {
   try {
-    // Extract JSON from LLM output (may have markdown wrappers)
     const jsonMatch = llmOutput.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) { await sendMessage(chatId, 'Mình là Trợ lý Gấm Vóc. Bạn cần tra cứu đơn hàng, SĐT, hay xem danh sách?'); return; }
+    if (!jsonMatch) {
+      // Can't parse — show order list as default (best guess for most queries)
+      const result = await listOrders();
+      if (result.data?.items?.length > 0) {
+        const items = result.data.items.map(formatOrder).join('\n\n───\n\n');
+        await sendMessage(chatId, `📋 Có ${result.data.items.length} đơn gần đây:\n\n${items}`);
+      } else {
+        await sendMessage(chatId, 'Mình là Trợ lý Gấm Vóc. Bạn cần:\n• tìm đơn #mã\n• tìm SĐT\n• danh sách đơn\n• sản xuất');
+      }
+      return;
+    }
 
     const cmd = JSON.parse(jsonMatch[0]);
 
@@ -96,24 +105,38 @@ async function handleLLMResponse(chatId, llmOutput, originalText) {
         const items = result.data.items.map(formatOrder).join('\n\n───\n\n');
         await sendMessage(chatId, `✅ Tìm thấy ${result.data.items.length} kết quả:\n\n${items}`);
       } else {
-        await sendMessage(chatId, `❌ Không tìm thấy kết quả cho "${cmd.keyword}"`);
+        await sendMessage(chatId, `❌ Không tìm thấy "${cmd.keyword}"`);
       }
     } else if (cmd.action === 'list' || cmd.action === 'list_sx') {
       const table = cmd.action === 'list_sx' ? 'tblT60XXm76Xi7fz' : TABLE_DH;
       const result = await listOrders(table);
       if (result.data?.items?.length > 0) {
         const items = result.data.items.map(formatOrder).join('\n\n───\n\n');
-        await sendMessage(chatId, `${cmd.action === 'list_sx' ? '🏭 Sản xuất' : '📋 Đơn hàng'} gần đây:\n\n${items}`);
+        await sendMessage(chatId, `${cmd.action === 'list_sx' ? '🏭 Sản xuất' : '📋 Đơn hàng'} gần đây (${result.data.items.length}):\n\n${items}`);
       } else {
         await sendMessage(chatId, 'Chưa có dữ liệu.');
       }
     } else if (cmd.action === 'chat') {
       await sendMessage(chatId, cmd.reply || 'Mình là Trợ lý Gấm Vóc. Bạn cần tra cứu gì ạ?');
     } else {
-      await sendMessage(chatId, 'Mình là Trợ lý Gấm Vóc. Bạn cần tra cứu đơn hàng, SĐT, hay xem danh sách?');
+      // Unknown action — show list
+      const result = await listOrders();
+      if (result.data?.items?.length > 0) {
+        const items = result.data.items.map(formatOrder).join('\n\n───\n\n');
+        await sendMessage(chatId, `📋 Có ${result.data.items.length} đơn gần đây:\n\n${items}`);
+      } else {
+        await sendMessage(chatId, 'Mình là Trợ lý Gấm Vóc. Bạn cần:\n• tìm đơn #mã\n• tìm SĐT\n• danh sách đơn\n• sản xuất');
+      }
     }
   } catch (e) {
-    await sendMessage(chatId, 'Mình là Trợ lý Gấm Vóc. Bạn cần tra cứu gì ạ?\n• tìm đơn #1480\n• tìm SĐT 0918400072\n• danh sách đơn\n• sản xuất');
+    // Parse error — show list
+    const result = await listOrders();
+    if (result.data?.items?.length > 0) {
+      const items = result.data.items.map(formatOrder).join('\n\n───\n\n');
+      await sendMessage(chatId, `📋 Có ${result.data.items.length} đơn gần đây:\n\n${items}`);
+    } else {
+      await sendMessage(chatId, 'Mình là Trợ lý Gấm Vóc. Bạn cần:\n• tìm đơn #mã\n• tìm SĐT\n• danh sách đơn\n• sản xuất');
+    }
   }
 }
 
