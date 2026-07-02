@@ -27,13 +27,19 @@ echo "[openclaw-bot] AI_BOX_MODEL=$AI_BOX_MODEL"
 echo "[openclaw-bot] TELEGRAM_BOT_TOKEN=$(echo "$TELEGRAM_BOT_TOKEN" | cut -c1-10)..."
 echo "[openclaw-bot] FEISHU_APP_ID=${FEISHU_APP_ID:+SET}"
 
-# Create workspace directory
+# Create directories
 mkdir -p /data/workspace
+mkdir -p /root/.openclaw
 
-# Write OpenClaw config with AI Box as custom provider
+# Write OpenClaw config to the default path (~/.openclaw/openclaw.json)
 echo "[openclaw-bot] Writing config..."
-cat > /data/workspace/openclaw.json << CONFIG
+cat > /root/.openclaw/openclaw.json << CONFIG
 {
+  "gateway": {
+    "mode": "local",
+    "port": 18789,
+    "bind": "loopback"
+  },
   "models": {
     "providers": {
       "ai-box": {
@@ -77,6 +83,8 @@ cat > /data/workspace/openclaw.json << CONFIG
 }
 CONFIG
 
+# Also copy to workspace for reference
+cp /root/.openclaw/openclaw.json /data/workspace/openclaw.json
 echo "[openclaw-bot] Config written"
 
 # Run OpenClaw doctor to fix configuration
