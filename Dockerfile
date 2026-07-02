@@ -14,9 +14,10 @@ RUN mkdir -p /data/workspace/skills/lark-base
 # Copy skills
 COPY skills/lark-base/SKILL.md /data/workspace/skills/lark-base/SKILL.md
 
-# Copy startup script
+# Copy startup script + lark lookup
 COPY start.sh /app/start.sh
-RUN chmod +x /app/start.sh
+COPY lark-lookup.js /usr/local/bin/lark-lookup
+RUN chmod +x /app/start.sh /usr/local/bin/lark-lookup
 
 # Expose ports
 EXPOSE 18789 8081

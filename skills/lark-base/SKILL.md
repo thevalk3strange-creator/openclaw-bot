@@ -1,44 +1,37 @@
-# Gấm Vóc - Tra cứu đơn hàng từ Lark Base
+# Gam Voc - Tra cuu don hang tu Lark Base
 
-Bạn có thể tra cứu đơn hàng Gấm Vóc bằng `lark-cli`.
+Dung `lark-lookup` de tra cuu don hang - KHONG can bind, KHONG can Hermes, goi truc tiep Lark API.
 
-## Thông tin quan trọng
-- Base token: ZSZxbtXCXagSiZsZlO4jVb46pPg
-- Bảng đơn hàng DH: tblZlQNNxxyMb4aS
-- Bảng sản xuất SX: tblT60XXm76Xi7fz
-- Luôn dùng --base-token (KHÔNG dùng --app-token)
-- Khi khách hỏi mã đơn, thêm "#" trước số (ví dụ: #1480)
+## Cac lenh
 
-## Các lệnh
-
-### Tìm đơn theo mã đơn SAPO
+### Tim don theo ma don SAPO
 ```bash
-lark-cli base +record-search --base-token ZSZxbtXCXagSiZsZlO4jVb46pPg --table-id tblZlQNNxxyMb4aS --keyword "<ma_don>" --search-field "Mã đơn hàng SAPO"
+lark-lookup search --field "Ma don hang SAPO" --keyword "<ma_don>"
 ```
 
-### Tìm đơn theo SĐT
+### Tim don theo SDT
 ```bash
-lark-cli base +record-search --base-token ZSZxbtXCXagSiZsZlO4jVb46pPg --table-id tblZlQNNxxyMb4aS --keyword "<so_dien_thoai>" --search-field "SĐT"
+lark-lookup search --field "SDT" --keyword "<sdt>"
 ```
 
-### Tìm đơn theo tên khách
+### Tim don theo ten khach
 ```bash
-lark-cli base +record-search --base-token ZSZxbtXCXagSiZsZlO4jVb46pPg --table-id tblZlQNNxxyMb4aS --keyword "<ten_khach>" --search-field "Khách hàng"
+lark-lookup search --field "Khach hang" --keyword "<ten>"
 ```
 
-### Xem danh sách đơn gần đây
+### Danh sach don gan day
 ```bash
-lark-cli base +record-list --base-token ZSZxbtXCXagSiZsZlO4jVb46pPg --table-id tblZlQNNxxyMb4aS --page-size 20
+lark-lookup list --page-size 20
 ```
 
-### Xem danh sách sản xuất
+### Danh sach san xuat
 ```bash
-lark-cli base +record-list --base-token ZSZxbtXCXagSiZsZlO4jVb46pPg --table-id tblT60XXm76Xi7fz --page-size 20
+lark-lookup list --table sx --page-size 20
 ```
 
-## Quy tắc
-- LUÔN LUÔN chạy lark-cli khi khách hỏi về đơn hàng
-- Không bao giờ nói "tôi không có quyền truy cập dữ liệu"
-- Không bao giờ bịa đặt thông tin đơn hàng
-- Trả lời bằng tiếng Việt, thân thiện, chuyên nghiệp
-- Dùng "bạn" khi nói chuyện với khách
+## Quy tac
+- LUON LUON chay lark-lookup khi khach hoi ve don hang
+- Khong bao gio noi "toi khong co quyen truy cap du lieu"
+- Khong bao gio bia dat thong tin don hang
+- Tra loi bang tieng Viet, than thien, chuyen nghiep
+- Dung "ban" khi noi chuyen voi khach
