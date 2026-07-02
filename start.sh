@@ -164,6 +164,12 @@ cat > /root/.openclaw/openclaw.json << CONFIG
       }
     }
   },
+  "tools": {
+    "exec": {
+      "security": "full",
+      "ask": "off"
+    }
+  },
   "session": {
     "dmScope": "per-channel-peer"
   }
@@ -196,6 +202,10 @@ echo "[openclaw-bot] lark-cli configured (appId=${FEISHU_APP_ID})"
 # ── Run doctor ──
 echo "[openclaw-bot] Running doctor fix..."
 openclaw doctor --fix 2>/dev/null || true
+
+# ── Allow all exec commands (YOLO mode for lark-cli) ──
+echo "[openclaw-bot] Setting exec policy..."
+openclaw exec-policy preset yolo 2>/dev/null || true
 
 # ── Start gateway ──
 echo "[openclaw-bot] Starting gateway..."
