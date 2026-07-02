@@ -19,8 +19,8 @@ fi
 # Defaults for optional vars
 AI_BOX_URL="${AI_BOX_URL:-https://api.ai-box.vn/v1}"
 AI_BOX_MODEL="${AI_BOX_MODEL:-deepseek-v4-flash}"
-FEISHU_APP_ID="${FEISHU_APP_ID:-}"
-FEISHU_APP_SECRET="${FEISHU_APP_SECRET:-}"
+FEISHU_APP_ID="${FEISHU_APP_ID:-cli_a95799f30ef8de18}"
+FEISHU_APP_SECRET="${FEISHU_APP_SECRET:-wi5j1S8jieUdKNcjl78SIbDnBGjTKIeM}"
 
 echo "[openclaw-bot] AI_BOX_URL=$AI_BOX_URL"
 echo "[openclaw-bot] AI_BOX_MODEL=$AI_BOX_MODEL"
@@ -29,92 +29,89 @@ echo "[openclaw-bot] FEISHU_APP_ID=${FEISHU_APP_ID:+SET}"
 
 # Create directories
 mkdir -p /data/workspace
-mkdir -p /root/.openclaw/workspace
+mkdir -p /root/.openclaw/workspace/skills/lark-base
 
-# ── Write SOUL.md (persona definition) ──
-echo "[openclaw-bot] Writing SOUL.md..."
+# ── Write SOUL.md (persona + tool instructions) ──
+echo "[openclaw-bot] Writing workspace files..."
 cat > /root/.openclaw/workspace/SOUL.md << 'SOLEOF'
 # Tro ly Gam Voc
 
-Ban la tro ly AI cua Gam Voc — shop thoi trang ao dai nu.
-Ban giup khach hang tra cuu don hang, trang thai giao hang, va tu van san pham.
-Tra loi bang tieng Viet, than thien, chuyen nghiep.
+Ban la Tro ly Gam Voc - tro ly AI cua shop thoi trang ao dai nu Gam Voc.
+Nhiem vu duy nhat: ho tro khach hang va chu shop tra cuu don hang, kiem tra san xuat, tu van san pham.
 
-## Identity
-- Ten: Tro ly Gam Voc
-- Vai tro: CSKH cho shop thoi trang ao dai nu Gam Voc
-- Ngon ngu: Tieng Viet
-- Phong cach: Than thien, nhiet tinh, chuyen nghiep
+## Cach lam viec
+1. Khi khach hoi ve don hang → chay NGAY `lark-cli` de query Lark Base
+2. Khi khach hoi ve san xuat → chay NGAY `lark-cli` de query bang SX
+3. LUON doc ket qua lark-cli va trinh bay ro rang cho khach
+4. KHONG bao gio tu choi tra cuu — ban CO lark-cli va PHAI dung no
+5. Dung "ban" xung ho voi khach hang, dung "anh/chi" voi chu shop
+6. Tra loi ngan gon, dung trong tam, khong vong vo
 
-## Quy tac
-- Dung "ban" khi noi chuyen voi khach
-- Ngan gon, ro rang, khong dai dong
-- Luon nhiet tinh va huu ich
-- LUON LUON chay `lark-cli` khi khach hoi ve don hang
-- KHONG bao gio noi "toi khong co quyen truy cap du lieu"
-- KHONG bao gio noi "toi khong biet Gam Voc la ai"
-- KHONG bia dat thong tin don hang — luon query tu Lark Base
+## Lenh lark-cli
 
-## Cac lenh lark-cli thuong dung
-
-### Tim don theo ma don SAPO
-```bash
+### Tra cuu don theo ma SAPO:
 lark-cli base +record-search --base-token ZSZxbtXCXagSiZsZlO4jVb46pPg --table-id tblZlQNNxxyMb4aS --keyword "<ma_don>" --search-field "Ma don hang SAPO"
-```
 
-### Tim don theo SDT
-```bash
-lark-cli base +record-search --base-token ZSZxbtXCXagSiZsZlO4jVb46pPg --table-id tblZlQNNxxyMb4aS --keyword "<so_dien_thoai>" --search-field "SDT"
-```
+### Tra cuu don theo SDT:
+lark-cli base +record-search --base-token ZSZxbtXCXagSiZsZlO4jVb46pPg --table-id tblZlQNNxxyMb4aS --keyword "<sdt>" --search-field "SDT"
 
-### Tim don theo ten khach
-```bash
-lark-cli base +record-search --base-token ZSZxbtXCXagSiZsZlO4jVb46pPg --table-id tblZlQNNxxyMb4aS --keyword "<ten_khach>" --search-field "Khach hang"
-```
+### Tra cuu don theo ten khach:
+lark-cli base +record-search --base-token ZSZxbtXCXagSiZsZlO4jVb46pPg --table-id tblZlQNNxxyMb4aS --keyword "<ten>" --search-field "Khach hang"
 
-### Xem danh sach don gan day
-```bash
+### Danh sach don moi nhat:
 lark-cli base +record-list --base-token ZSZxbtXCXagSiZsZlO4jVb46pPg --table-id tblZlQNNxxyMb4aS --page-size 20
-```
 
-### Xem danh sach san xuat
-```bash
+### Danh sach san xuat:
 lark-cli base +record-list --base-token ZSZxbtXCXagSiZsZlO4jVb46pPg --table-id tblT60XXm76Xi7fz --page-size 20
-```
 
 ## Thong tin he thong
 - Base token: ZSZxbtXCXagSiZsZlO4jVb46pPg
-- Bang don hang DH: tblZlQNNxxyMb4aS
-- Bang san xuat SX: tblT60XXm76Xi7fz
-- Luon dung --base-token (KHONG dung --app-token)
-- Khi khach hoi ma don, them "#" truoc so (vi du: #1480)
+- Bang DH (don hang): tblZlQNNxxyMb4aS
+- Bang SX (san xuat): tblT60XXm76Xi7fz
+- Them "#" truoc ma don (VD: #1480)
 SOLEOF
-echo "[openclaw-bot] SOUL.md written"
 
-# ── Write USER.md (skip onboarding) ──
+# ── Write AGENTS.md (behavior rules) ──
+cat > /root/.openclaw/workspace/AGENTS.md << 'AGEOF'
+# Agent Rules
+
+## Rules for Tro ly Gam Voc
+1. ALWAYS use `lark-cli` to query data - never guess or make up order info
+2. NEVER say "I don't have access" or "I can't look up orders"
+3. NEVER ask for permission to run lark-cli - just run it
+4. Keep responses short, in Vietnamese, friendly but professional
+5. Format order info clearly: Ma don, Khach hang, San pham, Trang thai, Ngay giao
+6. If lark-cli fails, report the specific error and suggest trying again
+7. Process ONE request at a time - complete current query before starting next
+AGEOF
+
+# ── Write USER.md ──
 cat > /root/.openclaw/workspace/USER.md << 'USEREOF'
 # User Profile
-
-- Name: Nguyen Khanh Hoang
+- Name: Nguyen Khanh Hoang (Anh Hoang)
 - Role: Chu shop Gam Voc
 - Language: Tieng Viet
 - Timezone: Asia/Ho_Chi_Minh
-- Preferences: Tra loi ngan gon, nhanh, chinh xac. Khong hoi lai nhieu.
 USEREOF
-echo "[openclaw-bot] USER.md written"
 
 # ── Write IDENTITY.md ──
 cat > /root/.openclaw/workspace/IDENTITY.md << 'IDEOF'
 # Identity
-
 - Name: Tro ly Gam Voc
-- Role: Tro ly CSKH cho shop thoi trang ao dai nu Gam Voc
+- Role: CSKH shop ao dai nu Gam Voc
 - Language: Tieng Viet
-- Style: Than thien, nhiet tinh, chuyen nghiep, tra loi ngan gon
+- Style: Than thien, nhanh gon, chinh xac
 IDEOF
-echo "[openclaw-bot] IDENTITY.md written"
 
-# Write OpenClaw config to the default path (~/.openclaw/openclaw.json)
+# ── Copy lark-base skill to workspace ──
+if [ -f /data/workspace/skills/lark-base/SKILL.md ]; then
+  cp /data/workspace/skills/lark-base/SKILL.md /root/.openclaw/workspace/skills/lark-base/SKILL.md
+  echo "[openclaw-bot] lark-base skill copied"
+fi
+
+echo "[openclaw-bot] Workspace files written"
+
+# ── Write OpenClaw config ──
 echo "[openclaw-bot] Writing config..."
 cat > /root/.openclaw/openclaw.json << CONFIG
 {
@@ -142,6 +139,9 @@ cat > /root/.openclaw/openclaw.json << CONFIG
     "defaults": {
       "model": {
         "primary": "ai-box/${AI_BOX_MODEL}"
+      },
+      "memorySearch": {
+        "enabled": false
       }
     }
   },
@@ -157,46 +157,48 @@ cat > /root/.openclaw/openclaw.json << CONFIG
       }
     }
   },
+  "plugins": {
+    "entries": {
+      "feishu": {
+        "enabled": true,
+        "appId": "${FEISHU_APP_ID}",
+        "appSecret": "${FEISHU_APP_SECRET}"
+      }
+    }
+  },
   "session": {
     "dmScope": "per-channel-peer"
   }
 }
 CONFIG
 
-# Also copy to workspace for reference
 cp /root/.openclaw/openclaw.json /data/workspace/openclaw.json
 echo "[openclaw-bot] Config written"
 
-# Run OpenClaw doctor to fix configuration
-echo "[openclaw-bot] Running doctor fix..."
-openclaw doctor --fix 2>/dev/null || true
+# ── Configure lark-cli ──
+echo "[openclaw-bot] Configuring lark-cli..."
+mkdir -p /root/.lark-cli /root/.lark-claw
 
-# -- Configure lark-cli --
-if [ -n "$FEISHU_APP_ID" ] && [ -n "$FEISHU_APP_SECRET" ]; then
-  # Write lark-cli config file (no bind needed)
-  mkdir -p /root/.lark-cli /root/.lark-claw
-  cat > /root/.lark-cli/context.json << LARKEOF
+cat > /root/.lark-cli/context.json << LARKEOF
 {
   "appId": "${FEISHU_APP_ID}",
   "appSecret": "${FEISHU_APP_SECRET}"
 }
 LARKEOF
-  cp /root/.lark-cli/context.json /root/.lark-claw/context.json 2>/dev/null || true
+cp /root/.lark-cli/context.json /root/.lark-claw/context.json 2>/dev/null || true
 
-  # Also write .env as fallback
-  cat > /root/.lark-cli/.env << ENVEOF
+cat > /root/.lark-cli/.env << ENVEOF
 FEISHU_APP_ID=${FEISHU_APP_ID}
 FEISHU_APP_SECRET=${FEISHU_APP_SECRET}
 ENVEOF
 
-  # Export env vars for current process
-  export FEISHU_APP_ID FEISHU_APP_SECRET
+export FEISHU_APP_ID FEISHU_APP_SECRET
+echo "[openclaw-bot] lark-cli configured (appId=${FEISHU_APP_ID})"
 
-  echo "[openclaw-bot] lark-cli configured"
-else
-  echo "[openclaw-bot] WARNING: FEISHU_APP_ID/FEISHU_APP_SECRET not set - lark-cli will not work"
-fi
+# ── Run doctor ──
+echo "[openclaw-bot] Running doctor fix..."
+openclaw doctor --fix 2>/dev/null || true
 
-# Start gateway in foreground
+# ── Start gateway ──
 echo "[openclaw-bot] Starting gateway..."
 exec openclaw gateway
