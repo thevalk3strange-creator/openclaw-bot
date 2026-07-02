@@ -160,9 +160,7 @@ cat > /root/.openclaw/openclaw.json << CONFIG
   "plugins": {
     "entries": {
       "feishu": {
-        "enabled": true,
-        "appId": "${FEISHU_APP_ID}",
-        "appSecret": "${FEISHU_APP_SECRET}"
+        "enabled": false
       }
     }
   },
