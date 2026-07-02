@@ -94,6 +94,7 @@ FEISHU_APP_SECRET=${FEISHU_APP_SECRET}
 HENVEOF
 
 export FEISHU_APP_ID FEISHU_APP_SECRET
+export GATEWAY_ALLOW_ALL_USERS=true
 echo "[start-hermes] lark-cli configured"
 
 # ── Bind lark-cli (best effort) ──
