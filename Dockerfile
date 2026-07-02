@@ -8,8 +8,11 @@ RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/* && 
 # Install lark-cli
 RUN npm install -g @larksuite/cli@latest
 
-# Create data directory
-RUN mkdir -p /data/workspace
+# Create data directory + skills
+RUN mkdir -p /data/workspace/skills/lark-base
+
+# Copy skills
+COPY skills/lark-base/SKILL.md /data/workspace/skills/lark-base/SKILL.md
 
 # Copy startup script
 COPY start.sh /app/start.sh
