@@ -18,7 +18,7 @@ fi
 
 # Defaults for optional vars
 AI_BOX_URL="${AI_BOX_URL:-https://api.ai-box.vn/v1}"
-AI_BOX_MODEL="${AI_BOX_MODEL:-deepseek-v4-flash}"
+AI_BOX_MODEL="${AI_BOX_MODEL:-deepseek-v4-pro}"
 FEISHU_APP_ID="${FEISHU_APP_ID:-cli_a95799f30ef8de18}"
 FEISHU_APP_SECRET="${FEISHU_APP_SECRET:-wi5j1S8jieUdKNcjl78SIbDnBGjTKIeM}"
 
