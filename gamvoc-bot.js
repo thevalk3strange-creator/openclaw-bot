@@ -65,14 +65,14 @@ async function sendMessage(chatId, text) {
 
 // ── AI Box LLM for natural language understanding ──
 async function askLLM(userMessage) {
-  const systemPrompt = `Ban la tro ly CSKH cua shop ao dai Gam Voc. Nguoi dung nhap: "${userMessage}".
-Hay xac dinh y dinh va tra ve JSON (CHI JSON, khong text khac):
+  const systemPrompt = `Ban la tro ly CSKH cua shop ao dai Gam Voc. Nguoi dung noi: "${userMessage}".
+Hay xac dinh y dinh va CHI tra ve JSON (khong text khac):
 - Tim don theo ma: {"action":"search","field":"Mã đơn hàng SAPO","keyword":"#XXX"}
 - Tim don theo SDT: {"action":"search","field":"SĐT","keyword":"XXX"}
-- Tim don theo ten: {"action":"search","field":"Khách hàng","keyword":"XXX"}
-- Xem danh sach don: {"action":"list"}
+- Tim don theo ten KH: {"action":"search","field":"Khách hàng","keyword":"XXX"}
+- Xem tat ca don gan day (khi hoi ve danh sach, hom qua, tuan nay, thang nay, bao nhieu nguoi dat, doanh thu): {"action":"list"}
 - Xem san xuat: {"action":"list_sx"}
-- Chào hỏi/không rõ: {"action":"chat","reply":"cau tra loi ngan gon bang tieng Viet"}`;
+- Chao hoi/hoi thong tin khong tra cuu duoc: {"action":"chat","reply":"cau tra loi ngan gon bang tieng Viet, neu khong tra cuu duoc thi goi y cac lenh: tim don #ma, tim SDT, danh sach don, san xuat"}`;
 
   const resp = await fetch(`${AI_BOX_URL}/v1/chat/completions`, {
     method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${AI_BOX_KEY}` },
